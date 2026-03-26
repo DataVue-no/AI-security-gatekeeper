@@ -396,5 +396,5 @@ MIT — see [LICENSE](LICENSE). Use freely, modify for your deployment, attribut
 
 ---
 
-*Built and battle-tested in production by [DataVue](https://datavue.no) · Stavanger, Norway*
+*Built and battle-tested in production by [DataVue](https://datavue.no) · Bergen, Norway*
 *Contributions welcome. Discussion encouraged. Security theatre discouraged.*
