@@ -238,5 +238,5 @@ More regex patterns help at the margins. Structural changes help everywhere.
 - [OWASP LLM01: Prompt Injection](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — canonical attack taxonomy
 - [Greshake et al. (2023): Indirect Prompt Injection](https://arxiv.org/abs/2302.12173) — the paper that named and systematised indirect injection
 - [Anthropic Constitutional AI](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback) — why trained models are not reliable L3 reviewers of themselves
-- [Oso: Agents Rule of Two](https://www.osohq.com/post/llm-authorization) — least privilege architecture for agentic systems
+- [Oso: Agents Rule of Two](https://www.osohq.com/learn/agents-rule-of-two-a-practical-approach-to-ai-agent-security) — least privilege architecture for agentic systems
 - [Claude Code PreToolUse Hooks](https://docs.anthropic.com/claude-code/hooks) — technical enforcement at tool invocation

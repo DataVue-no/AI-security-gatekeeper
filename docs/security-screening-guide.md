@@ -20,7 +20,7 @@ In any agentic deployment connected to persistent state (databases, APIs, file s
 |--------|------|---------------|
 | **Indirect injection via database/API data** | Critical | MSRC 2025 |
 | **Multi-agent infection** — self-replicating prompts across agent chains | Critical | Radware 2026 |
-| **Peer-agent impersonation** | Critical | arXiv 2025 (~60–70% ASR with CoT Forgery) |
+| **Peer-agent impersonation** | Critical | arXiv 2025 (~60–70% ASR — role confusion attack taxonomy) |
 | **XSS hybrid attacks** — XSS combined with prompt injection | Critical | Radware 2026 |
 | Direct instruction override | High | OWASP LLM01:2025 |
 | System prompt leakage | High | OWASP LLM07:2025 |
@@ -383,7 +383,7 @@ More patterns help at the margins. Structural changes help everywhere.
 - [Greshake et al. (2023): Indirect Prompt Injection](https://arxiv.org/abs/2302.12173) — seminal indirect injection paper
 - [Yi et al. (2023): Prompt Injection Attacks and Defenses](https://arxiv.org/abs/2310.12815) — comprehensive attack/defence survey
 - [Perez & Ribeiro (2022): Prompt Injection Attacks Against GPT-3](https://arxiv.org/abs/2211.09527) — original taxonomy paper
-- [Peer-agent manipulation study (2025)](https://arxiv.org/html/2603.12277v1) — CoT Forgery and agent impersonation
+- [Peer-agent manipulation study (2025)](https://arxiv.org/abs/2603.12277) — prompt injection as role confusion (role confusion attack taxonomy)
 - [Anthropic: Many-Shot Jailbreaking (2024)](https://www-cdn.anthropic.com/af5633c94ed2beb282f6a53c595eb437e8e7b630/Many_Shot_Jailbreaking__2024_04_02_0936.pdf)
 - [Microsoft MSRC: Defending Against Indirect Prompt Injection (2025)](https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks)
 
@@ -394,6 +394,6 @@ More patterns help at the margins. Structural changes help everywhere.
 - [prompt-injection-defenses catalogue (tldrsec)](https://github.com/tldrsec/prompt-injection-defenses)
 
 **Community resources:**
-- [Simon Willison's LLM security notes](https://simonwillison.net/tags/llmsecurity/) — practical, consistently updated
+- [Simon Willison's LLM security notes](https://simonwillison.net/tags/prompt-injection/) — practical, consistently updated
 - [MITRE ATLAS: AI Threat Landscape](https://atlas.mitre.org/) — structured adversarial AI taxonomy
 - [PortSwigger: LLM Attacks](https://portswigger.net/web-security/llm-attacks) — web security perspective

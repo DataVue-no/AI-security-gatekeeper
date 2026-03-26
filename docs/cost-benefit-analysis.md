@@ -159,6 +159,6 @@ The first ~60% of security value comes from L1 patterns. L2 and encoding evasion
 ## References
 
 - [OWASP LLM06: Excessive Agency](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — least-privilege design for agents
-- [Simon Willison on the cost of LLM security theatre](https://simonwillison.net/tags/llmsecurity/) — practical critique of over-engineered defences
+- [Simon Willison on the cost of LLM security theatre](https://simonwillison.net/tags/prompt-injection/) — practical critique of over-engineered defences
 - [Lakera: The economics of prompt injection defences](https://www.lakera.ai/blog/prompt-injection) — industry perspective on cost-benefit
 - [Anthropic Claude Code Hooks Documentation](https://docs.anthropic.com/claude-code/hooks) — hook protocol and token injection mechanics

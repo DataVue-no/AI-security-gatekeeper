@@ -354,14 +354,14 @@ This repository is our contribution to that conversation. It is not a complete s
 
 **Practical security:**
 - [Radware Cyberpedia: Prompt Injection](https://www.radware.com/cyberpedia/prompt-injection/) — attack taxonomy and real-world examples
-- [Simon Willison's LLM security notes](https://simonwillison.net/tags/llmsecurity/) — consistently excellent practical analysis
+- [Simon Willison's LLM security notes](https://simonwillison.net/tags/prompt-injection/) — consistently excellent practical analysis
 - [PortSwigger: LLM Attacks](https://portswigger.net/web-security/llm-attacks) — web security perspective on prompt injection
 - [Lakera AI: The Prompt Injection Threat](https://www.lakera.ai/blog/prompt-injection) — practical attack catalogue
 
 **Platform documentation:**
 - [Claude Code Hooks](https://docs.anthropic.com/claude-code/hooks) — UserPromptSubmit hook protocol
 - [Anthropic Constitutional AI](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback) — why L3 screening has fundamental limits
-- [Meta/Oso: Agents Rule of Two](https://www.osohq.com/post/llm-authorization) — least-privilege architecture for agentic systems
+- [Meta/Oso: Agents Rule of Two](https://www.osohq.com/learn/agents-rule-of-two-a-practical-approach-to-ai-agent-security) — least-privilege architecture for agentic systems
 
 **Adjacent work:**
 - [Gandalf by Lakera](https://gandalf.lakera.ai/) — interactive prompt injection demonstration
