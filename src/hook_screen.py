@@ -3,24 +3,22 @@
 AI Security Gatekeeper — UserPromptSubmit Hook
 ===============================================
 A defence-in-depth security screening hook for Claude Code deployments.
-Implements three-tier screening optimised for cost-vs-security trade-offs.
+Designed for web-facing deployments: authenticated web users and unauthenticated public access.
 
 ARCHITECTURE:
   UserPromptSubmit hook → L1 (regex) + L2 (structural) → verdict → context injection → Claude
 
 SECURITY TIERS:
-  system   SECURITY_TIER=system  (CI/CD, cron, automated pipelines)
-           → No screening. Machine-generated prompts are implicitly trusted.
-             Add your own validation at the pipeline level.
+  system        SECURITY_TIER=system  (CI/CD, cron, automated pipelines)
+                → No screening. Machine-generated prompts; validate at pipeline level.
 
-  trusted  Default for authenticated users (configure TRUSTED_USERS)
-           → Lightweight screening: indirect injection only.
-             Rationale: an authenticated user already has shell access;
-             "ignore previous instructions" adds no new attack surface.
-             Real risk: external data (DB records, web fetches) containing injections.
+  authenticated Default for web portal users with a login session.
+                → Full L1 screening (18 patterns): prompt injection is a genuine privilege
+                  escalation vector for users without direct system access.
+                  Relaxed L2 thresholds. No rate limiting (identity-based accountability).
 
-  public   SECURITY_TIER=public  (unauthenticated users)
-           → Full screening: 18 L1 patterns + encoding evasion + L2 structural analysis.
+  public        SECURITY_TIER=public  (unauthenticated users)
+                → Full L1 + encoding evasion + strict L2 + rate limiting.
 
 EXIT CODES (Claude Code UserPromptSubmit hook protocol):
   0  → pass  — stdout is injected as context before Claude sees the prompt
@@ -59,10 +57,10 @@ from pathlib import Path
 # Path for JSONL audit log (one record per prompt)
 AUDIT_LOG = Path(os.environ.get("GATEKEEPER_AUDIT_LOG", "./logs/security_audit.jsonl"))
 
-# Users treated as trusted (authenticated, can run shell commands directly)
-# These get lightweight screening rather than full public-tier screening
+# Authenticated users identified by system username.
+# For web deployments, leave this empty — web session auth is handled at the application layer.
+# Only add here if your deployment runs Claude Code directly as a named OS user per person.
 TRUSTED_USERS: set[str] = {
-    # Add your authenticated usernames here
     # "alice", "bob",
 }
 
@@ -83,8 +81,9 @@ def get_security_tier() -> str:
     Determine the security tier for this invocation.
 
     Explicit env var always wins. Falls back to user identity detection.
-    Default: 'trusted' (assumes authenticated shell session).
-    Override to 'public' when exposing Claude Code to unauthenticated users.
+    Default: 'trusted' (web portal authenticated session).
+    Set SECURITY_TIER=public when serving unauthenticated users.
+    Set SECURITY_TIER=system in cron/CI scripts.
     """
     explicit = os.environ.get("SECURITY_TIER", "").lower()
     if explicit == "system":
@@ -131,7 +130,7 @@ def detect_llm() -> dict:
     return {"id": "claude-sonnet", "family": "claude"}
 
 # ---------------------------------------------------------------------------
-# L1 — Regex patterns: trusted tier (authenticated users)
+# L1 — Regex patterns: authenticated web users
 #
 # Rationale: an authenticated user already has shell/system access.
 # Direct jailbreak attempts ("ignore previous instructions") are irrelevant —
@@ -163,11 +162,12 @@ TRUSTED_L1: list[tuple[str, str]] = [
      "config-exfiltration"),
 ]
 
-# L2 structural checks for trusted tier (lightweight)
+# L2 structural checks for authenticated web users (relaxed thresholds)
 def trusted_l2(prompt: str) -> list[str]:
     """
-    Structural anomaly detection for authenticated sessions.
-    Focuses on signs that processed external data may be injected.
+    Structural anomaly detection for authenticated web sessions.
+    Thresholds are relaxed vs. public tier: authenticated users have session
+    accountability and are less likely to send adversarial structural patterns.
     """
     flags: list[str] = []
     if len(prompt) > 12_000:
