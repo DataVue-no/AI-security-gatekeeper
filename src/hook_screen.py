@@ -33,7 +33,7 @@ REFERENCES:
   - OWASP LLM Top 10 (2025): https://owasp.org/www-project-top-10-for-large-language-model-applications/
   - Agents Rule of Two (Oso/Meta 2025): agents processing untrusted input must not
     simultaneously hold sensitive data access AND state-change capabilities
-  - Claude Code hooks: https://docs.anthropic.com/claude-code/hooks
+  - Claude Code hooks: https://code.claude.com/docs/en/hooks
 """
 
 from __future__ import annotations

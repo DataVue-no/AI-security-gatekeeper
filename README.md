@@ -20,7 +20,7 @@ When you deploy an agentic AI system connected to real infrastructure — databa
 - **Hybrid attacks** combine XSS or stored injection with prompt manipulation
 - **Encoding evasion** (base64, URL encoding, unicode escapes, HTML entities) bypasses naive string matching
 
-The [`UserPromptSubmit`](https://docs.anthropic.com/claude-code/hooks) hook in Claude Code provides a clean interception point before any prompt reaches the model. This repository documents our production implementation: what we screen for, why, what we deliberately skip, and the architectural limitations that no amount of regex can fix.
+The [`UserPromptSubmit`](https://code.claude.com/docs/en/hooks) hook in Claude Code provides a clean interception point before any prompt reaches the model. This repository documents our production implementation: what we screen for, why, what we deliberately skip, and the architectural limitations that no amount of regex can fix.
 
 ---
 
@@ -54,7 +54,7 @@ User / Automated Pipeline
                result in context)
 ```
 
-Exit code semantics are defined by the [Claude Code hooks protocol](https://docs.anthropic.com/claude-code/hooks):
+Exit code semantics are defined by the [Claude Code hooks protocol](https://code.claude.com/docs/en/hooks):
 - `exit 2` — block prompt, show stdout to user
 - `exit 0` — pass prompt, inject stdout as context before Claude sees it
 
@@ -358,7 +358,7 @@ This repository is our contribution to that conversation. It is not a complete s
 - [Lakera AI: The Prompt Injection Threat](https://www.lakera.ai/blog/prompt-injection) — practical attack catalogue
 
 **Platform documentation:**
-- [Claude Code Hooks](https://docs.anthropic.com/claude-code/hooks) — UserPromptSubmit hook protocol
+- [Claude Code Hooks](https://code.claude.com/docs/en/hooks) — UserPromptSubmit hook protocol
 - [Anthropic Constitutional AI](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback) — why L3 screening has fundamental limits
 - [Meta/Oso: Agents Rule of Two](https://www.osohq.com/learn/agents-rule-of-two-a-practical-approach-to-ai-agent-security) — least-privilege architecture for agentic systems
 
