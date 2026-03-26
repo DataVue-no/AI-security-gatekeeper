@@ -1,0 +1,13 @@
+logs/
+*.jsonl
+*.pyc
+__pycache__/
+.env
+.secrets*
+/tmp/gatekeeper_rate.json
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.venv/
+venv/

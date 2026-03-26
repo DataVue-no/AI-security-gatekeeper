@@ -1,0 +1,32 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /path/to/ai-security-gatekeeper/src/hook_screen.py",
+            "statusMessage": "Security screening..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /path/to/ai-security-gatekeeper/src/pre_bash_screen.py",
+            "statusMessage": "Screening bash command..."
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(python3 /path/to/ai-security-gatekeeper/src/hook_screen.py)"
+    ]
+  }
+}
