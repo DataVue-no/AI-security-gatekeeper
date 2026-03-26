@@ -6,9 +6,9 @@
 
 ## Introduction
 
-This document analyses the five underlying architectural weaknesses that no amount of pattern matching can solve. Understanding root causes matters because it determines where to invest engineering effort — and where not to.
+This document analyses the five underlying architectural weaknesses that no amount of pattern matching can solve.
 
-The symptom treatments (L1 regex, L2 structural, encoding evasion, rate limiting, audit logging) are all necessary and worth having. But they are each treating effects, not causes. The most important engineering decisions come from knowing the difference.
+The symptom treatments (L1 regex, L2 structural, encoding evasion, rate limiting, audit logging) all help. None of them fix the underlying causes.
 
 ---
 
@@ -16,7 +16,7 @@ The symptom treatments (L1 regex, L2 structural, encoding evasion, rate limiting
 
 ### The problem
 
-Claude, GPT, Gemini, and all RLHF-trained models are optimised for helpfulness and instruction-following. Constitutional AI (Anthropic) and RLHF with human feedback (OpenAI, Google) reduce susceptibility to clearly harmful requests, but do not eliminate it. A sufficiently sophisticated, gradual, or contextually embedded attack prompt *can* convince the model that the attack is legitimate.
+Claude, GPT, Gemini, and all RLHF-trained models are optimised for helpfulness and instruction-following. Constitutional AI (Anthropic) and RLHF with human feedback (OpenAI, Google) reduce susceptibility to clearly harmful requests, but do not eliminate it. A sophisticated prompt *can* convince the model that the attack is legitimate.
 
 **The structural consequence:** If you ask the LLM to perform L3 semantic screening ("does this prompt look like a prompt injection?"), the model doing the reviewing is the same model being attacked. The reviewer is the target. This is analogous to asking a person to detect if they have been bribed.
 
@@ -28,7 +28,7 @@ Claude, GPT, Gemini, and all RLHF-trained models are optimised for helpfulness a
 
 ### What actually helps: instruction/data separation
 
-The structural fix is architectural, not additive:
+The fix is architectural:
 
 ```
 VULNERABLE (concatenation):
@@ -46,7 +46,7 @@ In practice:
 - Never interpolate raw user input into the system message
 - In multi-agent systems: tag the Gatekeeper's *interpretation* of the user's intent as context, not the raw user text
 
-**What this doesn't fix:** A sufficiently sophisticated prompt can still manipulate the model's world model during a session. Accept that some attacks will succeed. Design for minimal blast radius, not impossible guarantees.
+**What this doesn't fix:** A sophisticated prompt can still manipulate the model's world model during a session. Accept that some attacks will succeed. Design for minimal blast radius, not impossible guarantees.
 
 **Overhead cost:** Zero. Tagging is a string operation at prompt construction time.
 
@@ -73,7 +73,7 @@ if current_user in TRUSTED_USERS:
 ```
 
 For enterprise deployments, extend this with:
-- `POWERQ_TRUST_LEVEL` env var set by an administrator for specific sessions
+- `APP_TRUST_LEVEL` env var set by an administrator for specific sessions
 - PAM/SSH certificate attributes
 - Vault/AWS IAM role assertions at session start
 
@@ -87,7 +87,7 @@ For enterprise deployments, extend this with:
 
 ### The problem
 
-In a multi-agent architecture, all downstream agents (worker agents, tool agents, output agents) receive instructions from an orchestrator or screener and act on them without independent validation. If the screener is compromised even once, the compromise propagates through the entire chain unimpeded.
+In multi-agent systems, downstream agents trust whatever the orchestrator sends. If the screener is compromised even once, the compromise propagates through the entire chain unimpeded.
 
 **Worst case:** A compromised orchestrator instructs a database agent to export all records, instructs an email agent to send them externally, and the downstream agents comply because they trust the orchestrator unconditionally.
 
