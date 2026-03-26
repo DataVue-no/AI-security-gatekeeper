@@ -13,7 +13,7 @@
 
 ## The Problem
 
-When you deploy an agentic AI system connected to real infrastructure — databases, APIs, file systems, email — prompt injection becomes an operational security risk, not an academic one. The attack surface expands significantly compared to a simple chatbot:
+When you deploy an agentic AI system connected to real infrastructure — databases, APIs, file systems, email — prompt injection becomes an operational security risk. The attack surface expands significantly compared to a simple chatbot:
 
 - **External data sources** (database records, web fetches, file contents) can contain injected instructions
 - **Multi-agent chains** can propagate injected payloads from one agent to the next
